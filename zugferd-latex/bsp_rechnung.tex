@@ -1,0 +1,142 @@
+\DocumentMetadata{pdfstandard=a-3b,lang=de}
+\documentclass[version=last,fontsize=12pt,footheight=30mm,DIV=15]{scrlttr2}
+\LoadLetterOption{DINmtext}
+
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[gen]{eurosym}
+\usepackage[format=xrechnung3.0]{my_rechnung}
+
+
+% use current date
+%\newcommand{\InvoiceYear}{\year}
+%\newcommand{\InvoiceMonth}{\month}
+%\newcommand{\InvoiceDay}{\day}
+\newcommand{\InvoiceYear}{2024} % must be 4 digits
+\newcommand{\InvoiceMonth}{05}  % must be 2 digits (leading zero)
+\newcommand{\InvoiceDay}{01}    % must be 2 digits (leading zero)
+
+\newcommand{\BuyerReference}{1} % Leitweg-ID
+\newcommand{\BuyerName}{Kevin Käufer}
+\newcommand{\BuyerPostcode}{11111}
+\newcommand{\BuyerCity}{Musterstadt}
+\newcommand{\BuyerCountry}{DE}
+\newcommand{\BuyerAddress}{Kundenstraße 17}
+\newcommand{\BuyerVatid}{}
+\newcommand{\BuyerEmail}{kaeufer@email.de}
+
+\setkomavar{yourref}[Ihre Bestellung vom]{01.04.2024}
+\setkomavar{invoice}{666}
+\setkomavar{date}[Datum]{\InvoiceDay.\InvoiceMonth.\InvoiceDay}
+\setkomavar{subject}{Beispielrechnung mit zugferd}
+\setkomavar{signature}{Verena Verkäuferin}
+
+\setkomavar{fromemail}{verkaeuferin@musterfirma.de}
+
+
+
+\DeclareUnicodeCharacter{20AC}{\euro} % damit sieht das €-Symbol besser aus
+
+\makeatletter
+  \addtoplength{firstfootvpos}{-50mm} % Fußnote nach oben ziehen
+  %\setplength{refvpos}{70mm} % Rechnungsnummerzeile nach oben ziehen
+\makeatother
+%\setplength{refwidth}{170mm}
+%\setplength{refhpos}{15mm}
+
+\setkomavar{firsthead}{%
+  \raggedleft{\Huge\selectfont\scshape 
+    Musterfirma
+  }
+}
+
+\setkomavar{firstfoot}{%
+  \parbox[t]{\textwidth}{\footnotesize
+  \begin{tabular}[t]{l@{}}%
+    Verena Verkäuferin \\
+    Verkaufsstraße 3 \\
+    55555 Verkaufsstadt \\
+    Deutschland
+  \end{tabular}%
+  \hfill
+  \begin{tabular}[t]{l@{}}%
+    \usekomavar*{fromphone} +49 111 22 33 44 55 \\
+    \usekomavar*{fromemail} verkaeuferin@musterfirma.de \\
+    \usekomavar*{fromurl} http://www.musterfirma.de \\
+    USt-IdNr. DE123456789 \\
+  \end{tabular}%
+  \hfill
+  \begin{tabular}[t]{l@{}}%
+    Kontoinhaber: Verena Verkäuferin \\
+    Sparkasse Musterstadt \\
+    IBAN: DE00 1111 2222 3333 4444 55 \\
+    BIC: MUSTERBICXX
+  \end{tabular}%
+}}
+
+
+
+
+
+\SetZUGFeRDData{
+  %document-type =  commercial-invoice,
+  id              = komavar,
+  date            = {\InvoiceDay\InvoiceMonth\InvoiceDay},
+  %delivery-date   = auto,
+  subject         = komavar,
+  fromaddress     = komavar,
+  %tax/category    = S,
+  tax/rate        = 19,
+  unit            = hour,
+  seller/name     = {Verena Verkäuferin},
+  seller/postcode = {55555},
+  seller/city     = {Verkaufsstadt},
+  seller/country  = DE,
+  seller/address  = {Verkaufsstraße 3},
+  seller/vatid    = {DE123456789},
+  seller/contact  = {Verena Verkäuferin\\+49 111 22 33 44 55\\verkaeuferin@musterfirma.de},
+    % required: BT-41 (Seller contact point)
+    %           BT-42 (Seller contact telephone number)
+    %           BT-43 (Seller contact email address)
+  seller/email    = {verkaeufer@musterfirma.de},
+  buyer/reference = \BuyerReference,
+  buyer/name      = \BuyerName,
+  buyer/postcode  = \BuyerPostcode,
+  buyer/city      = \BuyerCity,
+  buyer/country   = \BuyerCountry,
+  buyer/address   = \BuyerAddress,
+  %buyer/vatid     = \BuyerVatid, % muss man ganz weglassen, wenn unbekannt
+  buyer/email     = \BuyerEmail,
+  currency        = €,
+  % Entweder payment-terms oder due-date muss vorhanden sein:
+  payment-terms   = {Zahlbar innerhalb von 14 Tagen},
+  %due-date        = {20241231},
+  payment-means / type           = 58, % SEPA Überweisung
+  payment-means / iban           = {DE00 1111 2222 3333 4444 55},
+  payment-means / account-holder = {Verena Verkäuferin},
+  payment-means / bic            = MUSTERBICXX
+}
+
+
+
+\begin{document}
+  \begin{letter}{\BuyerName\\
+      \BuyerAddress\\
+      \BuyerPostcode\ \BuyerCity
+    }
+    \enlargethispage{6\baselineskip} % Unterschrift darf weiter nach unten
+    \opening{Sehr geehrter Herr Käufer,}
+
+    ich bedanke mich für Ihr Vertrauen und berechne folgende Leistungen:
+
+    \AddInvoiceItem{10}{Erster Punkt}{60}
+    \AddInvoiceItem{20}{Zweiter Punkt}{70}
+    \AddInvoiceItem{30}{Dritter Punkt}{80}
+
+    \PrintInvoiceTabular
+
+    \noindent Bitte überweisen Sie den Rechnungsbetrag ohne Abzüge innerhalb
+    von 14 Tagen auf mein unten angegebenes Konto.
+    \closing{Mit freundlichen Grüßen}
+  \end{letter}
+\end{document}
