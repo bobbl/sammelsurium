@@ -1,4 +1,4 @@
-Elektronische ZUGFerd-Rechnung mit Latex erstellen
+Elektronische ZUGFeRD-Rechnung mit Latex erstellen
 ==================================================
 
 Um ZUGFeRD-Rechnungen mit Latex zu erstellen, wird das Paket `zugfperd`
