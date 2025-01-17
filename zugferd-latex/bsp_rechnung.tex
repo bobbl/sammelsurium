@@ -69,7 +69,8 @@
   \begin{tabular}[t]{l@{}}%
     Kontoinhaber: Verena Verkäuferin \\
     Sparkasse Musterstadt \\
-    IBAN: DE00 1111 2222 3333 4444 55 \\
+    IBAN: DE68 2105 0170 0012 3456 78 \\
+
     BIC: MUSTERBICXX
   \end{tabular}%
 }}
@@ -81,7 +82,7 @@
 \SetZUGFeRDData{
   %document-type =  commercial-invoice,
   id              = komavar,
-  date            = {\InvoiceDay\InvoiceMonth\InvoiceDay},
+  date            = {\InvoiceYear\InvoiceMonth\InvoiceDay},
   %delivery-date   = auto,
   subject         = komavar,
   fromaddress     = komavar,
@@ -112,7 +113,7 @@
   payment-terms   = {Zahlbar innerhalb von 14 Tagen},
   %due-date        = {20241231},
   payment-means / type           = 58, % SEPA Überweisung
-  payment-means / iban           = {DE00 1111 2222 3333 4444 55},
+  payment-means / iban           = {DE68 2105 0170 0012 3456 78},
   payment-means / account-holder = {Verena Verkäuferin},
   payment-means / bic            = MUSTERBICXX
 }

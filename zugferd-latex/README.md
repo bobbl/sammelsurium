@@ -23,7 +23,7 @@ Beispieldatei `zugerd-invoice.sty` für meine Bedürfnisse angepasst und
 `my_rechnung.sty` genannt. Eine Beispielrechnung ist in `bsp_rechnung.tex` zu
 finden.
 
-For a result without warnings, run pdfTeX three times:
+Erst nach dreimaligem Aufruf verschwinden alle Warnungen:
 
     pdflatex bsp_rechnung.tex
     pdflatex bsp_rechnung.tex
