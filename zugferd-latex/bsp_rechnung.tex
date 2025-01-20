@@ -9,29 +9,54 @@
 
 
 % use current date
-%\newcommand{\InvoiceYear}{\year}
-%\newcommand{\InvoiceMonth}{\month}
-%\newcommand{\InvoiceDay}{\day}
+%\newcommand{\InvoiceYear}{\the\year}
+%\newcommand{\InvoiceMonth}{\ifnum\the\month<10 0\fi\the\month}
+%\newcommand{\InvoiceDay}{\ifnum\the\day<10 0\fi\the\day}
 \newcommand{\InvoiceYear}{2024} % must be 4 digits
 \newcommand{\InvoiceMonth}{05}  % must be 2 digits (leading zero)
 \newcommand{\InvoiceDay}{01}    % must be 2 digits (leading zero)
 
-\newcommand{\BuyerReference}{1} % Leitweg-ID
+\newcommand{\InvoiceNo}{6667}    % must be 2 digits (leading zero)
+
+
 \newcommand{\BuyerName}{Kevin Käufer}
+\newcommand{\BuyerAddress}{Kundenstraße 17}
 \newcommand{\BuyerPostcode}{11111}
 \newcommand{\BuyerCity}{Musterstadt}
 \newcommand{\BuyerCountry}{DE}
-\newcommand{\BuyerAddress}{Kundenstraße 17}
-\newcommand{\BuyerVatid}{}
 \newcommand{\BuyerEmail}{kaeufer@email.de}
+\newcommand{\BuyerVatid}{}
+\newcommand{\BuyerReference}{1} % Leitweg-ID
+
+\newcommand{\SellerName}{Verena Verkäuferin}
+\newcommand{\SellerAddress}{Verkaufsstraße 3}
+\newcommand{\SellerPostcode}{55555}
+\newcommand{\SellerCity}{Verkaufsstadt}
+\newcommand{\SellerCountry}{DE}
+\newcommand{\SellerPhone}{+49 111 22 33 44 55}
+\newcommand{\SellerEmail}{verkaeuferin@musterfirma.de}
+\newcommand{\SellerUrl}{https://www.musterfirma.de}
+\newcommand{\SellerVatid}{DE123456789}
+\newcommand{\SellerAccountHolder}{\SellerName}
+\newcommand{\SellerIban}{DE68 2105 0170 0012 3456 78}
+\newcommand{\SellerBic}{MUSTERBICXX}
+
+
+%\setkomavar{fromemail}{verkaeuferin@musterfirma.de}
+%\setkomavar{fromphone}{+49 111 22 33 44 55}
+%\usekomavar[\newcommand\SellerPhone]{fromphone}
+%\usekomavar[\newcommand\SellerEmail]{fromemail}
 
 \setkomavar{yourref}[Ihre Bestellung vom]{01.04.2024}
-\setkomavar{invoice}{666}
-\setkomavar{date}[Datum]{\InvoiceDay.\InvoiceMonth.\InvoiceDay}
-\setkomavar{subject}{Beispielrechnung mit zugferd}
-\setkomavar{signature}{Verena Verkäuferin}
 
-\setkomavar{fromemail}{verkaeuferin@musterfirma.de}
+\setkomavar{fromname}{\SellerName}
+\setkomavar{fromaddress}{\SellerAddress\\\SellerPostcode\ \SellerCity}
+\setkomavar{invoice}{\InvoiceNo}
+\setkomavar{date}{\InvoiceDay.\InvoiceMonth.\InvoiceYear}
+\setkomavar{subject}{Beispielrechnung mit zugferd}
+\setkomavar{signature}{\SellerName}
+
+
 
 
 
@@ -53,29 +78,34 @@
 \setkomavar{firstfoot}{%
   \parbox[t]{\textwidth}{\footnotesize
   \begin{tabular}[t]{l@{}}%
-    Verena Verkäuferin \\
-    Verkaufsstraße 3 \\
-    55555 Verkaufsstadt \\
-    Deutschland
+    \SellerName\\
+    \SellerAddress\\
+    \SellerPostcode\ \SellerCity\\
+    \SellerCountry % TODO: convert to full name
   \end{tabular}%
   \hfill
   \begin{tabular}[t]{l@{}}%
-    \usekomavar*{fromphone} +49 111 22 33 44 55 \\
-    \usekomavar*{fromemail} verkaeuferin@musterfirma.de \\
-    \usekomavar*{fromurl} http://www.musterfirma.de \\
-    USt-IdNr. DE123456789 \\
+    \usekomavar*{fromphone}\usekomavar{fromphone}\\
+    \usekomavar*{fromemail}\usekomavar{fromemail}\\
+    \usekomavar*{fromurl} \SellerUrl\\
+    USt-IdNr. \SellerVatid\\
   \end{tabular}%
   \hfill
   \begin{tabular}[t]{l@{}}%
-    Kontoinhaber: Verena Verkäuferin \\
-    Sparkasse Musterstadt \\
-    IBAN: DE68 2105 0170 0012 3456 78 \\
-
-    BIC: MUSTERBICXX
+    Kontoinhaber: \SellerAccountHolder\\
+    IBAN: \SellerIban\\
+    BIC: \SellerBic
   \end{tabular}%
 }}
 
 
+
+
+
+
+
+%\newcommand\SetZugferdKoma[2]{\SetZUGFeRDData{#1=#2}}
+%\usekomavar[\SetZugferdKoma{seller/email}]{fromemail}
 
 
 
@@ -89,17 +119,17 @@
   %tax/category    = S,
   tax/rate        = 19,
   unit            = hour,
-  seller/name     = {Verena Verkäuferin},
-  seller/postcode = {55555},
-  seller/city     = {Verkaufsstadt},
-  seller/country  = DE,
-  seller/address  = {Verkaufsstraße 3},
-  seller/vatid    = {DE123456789},
-  seller/contact  = {Verena Verkäuferin\\+49 111 22 33 44 55\\verkaeuferin@musterfirma.de},
+  seller/name     = \SellerName,
+  seller/postcode = \SellerPostcode,
+  seller/city     = \SellerCity,
+  seller/country  = \SellerCountry,
+  seller/address  = \SellerAddress,
+  seller/vatid    = \SellerVatid,
+  seller/contact  = {\SellerName\\\SellerPhone\\\SellerEmail},
     % required: BT-41 (Seller contact point)
     %           BT-42 (Seller contact telephone number)
     %           BT-43 (Seller contact email address)
-  seller/email    = {verkaeufer@musterfirma.de},
+  seller/email    = \SellerEmail,
   buyer/reference = \BuyerReference,
   buyer/name      = \BuyerName,
   buyer/postcode  = \BuyerPostcode,
@@ -113,9 +143,9 @@
   payment-terms   = {Zahlbar innerhalb von 14 Tagen},
   %due-date        = {20241231},
   payment-means / type           = 58, % SEPA Überweisung
-  payment-means / iban           = {DE68 2105 0170 0012 3456 78},
-  payment-means / account-holder = {Verena Verkäuferin},
-  payment-means / bic            = MUSTERBICXX
+  payment-means / iban           = \SellerIban,
+  payment-means / account-holder = \SellerAccountHolder,
+  payment-means / bic            = \SellerBic
 }
 
 
