@@ -1,5 +1,5 @@
 \DocumentMetadata{pdfstandard=a-3b,lang=de}
-\documentclass[version=last,fontsize=12pt,footheight=30mm,DIV=15]{scrlttr2}
+\documentclass[version=last,fontsize=12pt,DIV=15]{scrlttr2}
 \LoadLetterOption{DINmtext}
 
 \usepackage[ngerman]{babel}
@@ -8,16 +8,17 @@
 \usepackage[format=xrechnung3.0]{my_rechnung}
 
 
-% use current date
+
+
+% aktuelles Datum verwenden
 %\newcommand{\InvoiceYear}{\the\year}
 %\newcommand{\InvoiceMonth}{\ifnum\the\month<10 0\fi\the\month}
 %\newcommand{\InvoiceDay}{\ifnum\the\day<10 0\fi\the\day}
-\newcommand{\InvoiceYear}{2024} % must be 4 digits
-\newcommand{\InvoiceMonth}{05}  % must be 2 digits (leading zero)
-\newcommand{\InvoiceDay}{01}    % must be 2 digits (leading zero)
+\newcommand{\InvoiceYear}{2024} % muss 4-stellig sein
+\newcommand{\InvoiceMonth}{05}  % muss 2-stellig sein
+\newcommand{\InvoiceDay}{01}    % muss 2-stellig sein
 
-\newcommand{\InvoiceNo}{6667}    % must be 2 digits (leading zero)
-
+\newcommand{\InvoiceNo}{6667}
 
 \newcommand{\BuyerName}{Kevin Käufer}
 \newcommand{\BuyerAddress}{Kundenstraße 17}
@@ -33,7 +34,7 @@
 \newcommand{\SellerPostcode}{55555}
 \newcommand{\SellerCity}{Verkaufsstadt}
 \newcommand{\SellerCountry}{DE}
-\newcommand{\SellerPhone}{+49 111 22 33 44 55}
+\newcommand{\SellerPhone}{+49 111 22334455}
 \newcommand{\SellerEmail}{verkaeuferin@musterfirma.de}
 \newcommand{\SellerUrl}{https://www.musterfirma.de}
 \newcommand{\SellerVatid}{DE123456789}
@@ -42,70 +43,62 @@
 \newcommand{\SellerBic}{MUSTERBICXX}
 
 
-%\setkomavar{fromemail}{verkaeuferin@musterfirma.de}
-%\setkomavar{fromphone}{+49 111 22 33 44 55}
-%\usekomavar[\newcommand\SellerPhone]{fromphone}
-%\usekomavar[\newcommand\SellerEmail]{fromemail}
-
 \setkomavar{yourref}[Ihre Bestellung vom]{01.04.2024}
+\setkomavar{subject}{Beispielrechnung mit zugferd}
+
+\setkomavar{firsthead}{%
+  \parbox{105mm}{\Huge\selectfont\scshape
+    Firmenlogo
+  }
+  \parbox{60mm}{
+    \SellerName\\
+    \SellerAddress\\
+    \SellerPostcode\ \SellerCity
+  }
+}
+
+
+
+
 
 \setkomavar{fromname}{\SellerName}
 \setkomavar{fromaddress}{\SellerAddress\\\SellerPostcode\ \SellerCity}
 \setkomavar{invoice}{\InvoiceNo}
 \setkomavar{date}{\InvoiceDay.\InvoiceMonth.\InvoiceYear}
-\setkomavar{subject}{Beispielrechnung mit zugferd}
 \setkomavar{signature}{\SellerName}
 
-
+\setkomavar{location}{%
+    \footnotesize
+    \begin{tabular}{@{}l@{}l}%
+      \textsf{\scriptsize\usekomavar*{fromphone}} & \SellerPhone \\
+      \textsf{\scriptsize\usekomavar*{fromemail}} & \SellerEmail \\
+      \textsf{\scriptsize\usekomavar*{fromurl}}   & \SellerUrl \\
+      \textsf{\scriptsize Ust-IdNr.:}   & \SellerVatid%
+    \vspace{2mm} \\
+      \textsf{\scriptsize Kontoinhaber:}   & \SellerAccountHolder\\
+      \textsf{\scriptsize IBAN:}        & \SellerIban\\
+      \textsf{\scriptsize BIC:}         & \SellerBic
+    \end{tabular}
+}
 
 
 
 \DeclareUnicodeCharacter{20AC}{\euro} % damit sieht das €-Symbol besser aus
 
 \makeatletter
-  \addtoplength{firstfootvpos}{-50mm} % Fußnote nach oben ziehen
-  %\setplength{refvpos}{70mm} % Rechnungsnummerzeile nach oben ziehen
+
+  % Breite des Informationsblocks (Absenderergänzung) gemäß DIN 5008:
+  \setplength{locwidth}{75mm}     % 75mm breit
+  \setplength{lochpos}{10mm}      % 10mm zum rechten Rand
+
+  % Rechnungsnummerzeile nach oben ziehen (bringt 3 Zeilen mehr)
+  % nach DIN 5008 nicht legal, aber unproblematisch wenn nicht in einem Briefumschlag 
+%  \addtoplength{refvpos}{-15mm}
+
+  % Seite bis ganz unten verlängern
+  \setlength{\textheight}{264mm}
+
 \makeatother
-%\setplength{refwidth}{170mm}
-%\setplength{refhpos}{15mm}
-
-\setkomavar{firsthead}{%
-  \raggedleft{\Huge\selectfont\scshape 
-    Musterfirma
-  }
-}
-
-\setkomavar{firstfoot}{%
-  \parbox[t]{\textwidth}{\footnotesize
-  \begin{tabular}[t]{l@{}}%
-    \SellerName\\
-    \SellerAddress\\
-    \SellerPostcode\ \SellerCity\\
-    \SellerCountry % TODO: convert to full name
-  \end{tabular}%
-  \hfill
-  \begin{tabular}[t]{l@{}}%
-    \usekomavar*{fromphone}\usekomavar{fromphone}\\
-    \usekomavar*{fromemail}\usekomavar{fromemail}\\
-    \usekomavar*{fromurl} \SellerUrl\\
-    USt-IdNr. \SellerVatid\\
-  \end{tabular}%
-  \hfill
-  \begin{tabular}[t]{l@{}}%
-    Kontoinhaber: \SellerAccountHolder\\
-    IBAN: \SellerIban\\
-    BIC: \SellerBic
-  \end{tabular}%
-}}
-
-
-
-
-
-
-
-%\newcommand\SetZugferdKoma[2]{\SetZUGFeRDData{#1=#2}}
-%\usekomavar[\SetZugferdKoma{seller/email}]{fromemail}
 
 
 
@@ -140,7 +133,7 @@
   buyer/email     = \BuyerEmail,
   currency        = €,
   % Entweder payment-terms oder due-date muss vorhanden sein:
-  payment-terms   = {Zahlbar innerhalb von 14 Tagen},
+  payment-terms   = {Zahlbar sofort ohne Abzug},
   %due-date        = {20241231},
   payment-means / type           = 58, % SEPA Überweisung
   payment-means / iban           = \SellerIban,
@@ -155,10 +148,10 @@
       \BuyerAddress\\
       \BuyerPostcode\ \BuyerCity
     }
-    \enlargethispage{6\baselineskip} % Unterschrift darf weiter nach unten
     \opening{Sehr geehrter Herr Käufer,}
 
-    ich bedanke mich für Ihr Vertrauen und berechne folgende Leistungen:
+    ich bedanke mich für Ihr Vertrauen und berechne folgende Leistungen, die
+    bis zum \InvoiceDay.\InvoiceMonth.\InvoiceYear\ erbracht wurden:
 
     \AddInvoiceItem{10}{Erster Punkt}{60}
     \AddInvoiceItem{20}{Zweiter Punkt}{70}
@@ -166,8 +159,8 @@
 
     \PrintInvoiceTabular
 
-    \noindent Bitte überweisen Sie den Rechnungsbetrag ohne Abzüge innerhalb
-    von 14 Tagen auf mein unten angegebenes Konto.
+    \noindent Bitte überweisen Sie den Rechnungsbetrag sofort ohne Abzug auf
+      das oben genannte Konto.
     \closing{Mit freundlichen Grüßen}
   \end{letter}
 \end{document}
