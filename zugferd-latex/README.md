@@ -2,9 +2,9 @@ Elektronische ZUGFeRD-Rechnung mit Latex erstellen
 ==================================================
 
 Um ZUGFeRD-Rechnungen mit Latex zu erstellen, wird das Paket
-[zugferdh](ttps://ctan.org/pkg/zugferd)
-verwendet, das aber sehr neu ist und zum Beispiel noch nicht in den offiziellen
-Paketen von Ubuntu LTS 24.04 (Noble Numbat) enthalten ist.
+[zugferd](https://ctan.org/pkg/zugferd) verwendet.
+Es ist aber noch sehr neu und zum Beispiel noch nicht in den offiziellen
+Paketen von Ubuntu LTS 24.04 (Noble Numbat) enthalten.
 Außerdem braucht `zugferd` eine relativ neue Version von 
 [pdfmanagement-testphase](https://ctan.org/pkg/pdfmanagement-testphase).
 
@@ -16,8 +16,8 @@ Dateien benötigt:
     pdfmanagement-testphase.ltx
     3backend-testphase-pdftex.def
 
-die hier von Hand eingefügt wurden. Auch wurden sie leicht angepasst, um auch
-mit älteren Latex-Kernels zu funktionieren. Genauerers dazu in meinem
+die hier von Hand eingefügt wurden. Außerdem wurden sie leicht angepasst, um
+auch mit älteren Latex-Kernels zu funktionieren. Genauerers dazu in meinem
 [Blogeintrag](https://bobbl.github.io/latex/xrechnung/zugferd/2025/01/16/e-rechnung-mit-latex.html)
 
 Der Autor von `zugferd` schlägt vor, die immer gleichen Teile einer Rechung in
