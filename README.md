@@ -12,6 +12,11 @@ printf
 Very small and incomplete printf() implementation.
 
 
+seed_mb_from_gnudb
+------------------
+Use CD data from gnudb to add a CD release to MusicBrainz.
+
+
 zugferd-latex
 -------------
 Example for an electronic invoice according to the German ZUGFeRD and
