@@ -139,6 +139,7 @@ def gnudb_read_entry(category, dischash):
         exit(4)
 
     tracks = []
+    prev_line = ""
     lines = response.splitlines()
     for line in lines:
         words = line.split("=", 1)
@@ -151,13 +152,18 @@ def gnudb_read_entry(category, dischash):
         elif words[0][:6]=="TTITLE":
             try:
                 track_no = int(words[0][6:])
+                if track_no == (len(tracks) - 1):
+                    # continuation of previous TITLE field
+                    words[1] = prev_word1 + words[1]
+                    del tracks[-1]
                 assert track_no == len(tracks)
             except:
-                print("Invalid track number or not in order '{words[0]}'", file=sys.stderr)
+                print(f"Invalid track number or not in order '{words[0]}'", file=sys.stderr)
                 exit(5)
             a, t  = split_artist(words[1], option_delimiter)
             tracks.append({'artist': a, 'title': t})
         # ignore other keywords
+        prev_word1 = words[1] if len(words)>1 else ""
 
     return {
         'title': title,
